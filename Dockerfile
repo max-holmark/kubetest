@@ -8,6 +8,7 @@ RUN dotnet publish -c Release -o ./dist --no-cache
 # Setup
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal
 
+EXPOSE 80
 EXPOSE 10000
 
 WORKDIR /app

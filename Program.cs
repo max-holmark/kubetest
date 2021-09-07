@@ -16,7 +16,7 @@ namespace kubetest
       return Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
-          webBuilder.UseUrls("http://0.0.0.0:10000");
+          webBuilder.UseUrls("http://0.0.0.0:80;http://0.0.0.0:10000");
           webBuilder.UseStartup<Startup>();
         });
     }
