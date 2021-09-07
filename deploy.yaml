@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubetest-deployment
+  namespace: kubetest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubetest
+  template:
+    metadata:
+      labels:
+        app: kubetest
+    spec:
+      containers:
+        - name: kubetest
+          image: maxholmark/kubetest:latest
+          ports:
+            - protocol: TCP
+              containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubetest-service
+  namespace: kubetest
+spec:
+  selector:
+    app: kubetest
+  ports:
+    - name: kubetest-http
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: its-ingress
+  namespace: its
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kubetest-service
+                port:
+                  number: 80
